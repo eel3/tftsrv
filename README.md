@@ -20,10 +20,10 @@ Set up
 2. Put tftsrv/tftsrv2 to a directory registered in PATH.
 2. Modify tftsrv/tftsrv2 to configure some variables.
 
-| name     | synopsis                              | description                     |
-|:---------|:--------------------------------------|:--------------------------------|
-| nccmd    | nccmd <listen-port>                   | nc(1) in listen mode.           |
-| httpecho | httpecho <string-with-c-style-escape> | echo command for HTTP response. |
+| name     | synopsis                                  | description                     |
+|:---------|:------------------------------------------|:--------------------------------|
+| nccmd    | nccmd &ltlisten-port&gt                   | nc(1) in listen mode.           |
+| httpecho | httpecho &ltstring-with-c-style-escape&gt | echo command for HTTP response. |
 
 
 Usage
