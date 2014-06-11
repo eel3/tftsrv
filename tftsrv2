@@ -49,8 +49,6 @@ readonly httpecho="echo -n"
 # readonly httpecho=printf
 
 # Default parameters.
-# If no file name or file name is `-',
-# we don't output Content-Length and translate data from stdin.
 readonly defport=5432
 readonly deffile='-'
 
