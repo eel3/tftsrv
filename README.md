@@ -17,7 +17,7 @@ Set up
 ------
 
 1. Install nc(1) (netcat). tftsrv and tftsrv2 need nc(1).
-2. Put tftsrv/tftsrv2 to a directory registered in PATH.
+2. Put tftsrv/tftsrv2 in a directory registered in PATH.
 2. Modify tftsrv/tftsrv2 to configure some variables.
 
 | name     | synopsis                                    | description                     |
