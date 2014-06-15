@@ -13,6 +13,13 @@ License
 
 zlib License.
 
+Target environments
+-------------------
+
+Cygwin, Linux, Mac OS X.
+
+tftsrv and tftsrv2 are shell script (sh), and so probably worked in other Unix-like environment.
+
 Set up
 ------
 
@@ -24,7 +31,6 @@ Set up
 |:---------|:--------------------------------------------|:--------------------------------|
 | nccmd    | nccmd &lt;listen-port&gt;                   | nc(1) in listen mode.           |
 | httpecho | httpecho &lt;string-with-c-style-escape&gt; | echo command for HTTP response. |
-
 
 Usage
 -----
