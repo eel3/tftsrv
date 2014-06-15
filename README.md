@@ -18,7 +18,7 @@ Target environments
 
 Cygwin, Linux, Mac OS X.
 
-tftsrv and tftsrv2 are shell script (sh), and so probably worked in other Unix-like environment.
+tftsrv and tftsrv2 are shell script (sh), and so probably work file on other Unix-like environment.
 
 Set up
 ------
