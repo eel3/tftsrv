@@ -1,5 +1,5 @@
 #!/bin/sh
-# @(#) Tiny File Transmit SeRVice/SeRVer (one shot). Version 1.0.0.20140608
+# @(#) Tiny File Transmit SeRVice/SeRVer (one-time). Version 1.0.0.20140608
 
 # Copyright (c) 2014 eel3
 #
@@ -96,7 +96,7 @@ if [ $# -ne 0 ]; then
     exit 1
 fi
 
-# exec one shot dummy HTTP service
+# exec one-time dummy HTTP service
 {
     $httpecho "HTTP/1.0 200 OK\r\n"
     $httpecho "Date: `LANG=C date -u '+%a, %d %b %Y %T GMT'`\r\n"

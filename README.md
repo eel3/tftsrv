@@ -5,8 +5,8 @@ Tiny File Transmit SeRVice/SeRVer (fake httpd).
 
 tftsrv and tftsrv2 behave like httpd, but always respond same data.
 
-* tftsrv : one shot (respond data, and then exit).
-* tftsrv2 : not one shot (to stop, use Ctrl-c or kill(1)).
+* tftsrv : one-time (respond data, and then exit).
+* tftsrv2 : not one-time (to stop, use Ctrl-c or kill(1)).
 
 License
 -------
