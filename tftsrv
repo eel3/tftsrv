@@ -1,5 +1,7 @@
 #!/bin/sh
-# @(#) Tiny File Transmit SeRVice/SeRVer (one-time). Version 1.0.0.20140608
+# -*- coding: utf-8-unix -*-
+# vim:fileencoding=utf-8:ff=unix
+# @(#) Tiny File Transmit SeRVice/SeRVer (one-time).
 
 # Copyright (c) 2014 eel3
 #
@@ -22,12 +24,17 @@
 #     3. This notice may not be removed or altered from any source
 #     distribution.
 
+set -u
+umask 0022
+IFS=$(printf ' \t\n_'); IFS=${IFS%_}
 PATH=/bin:/usr/bin:/usr/local/bin
+export IFS LC_ALL=C LANG=C PATH
 
-readonly progname=`basename "$0"`
+readonly progname=${0##*/}
+readonly version=1.1.0.20190405
 
 # this server application name.
-readonly appname="tftsrv/1.0.0"
+readonly appname="tftsrv/1.1.0"
 
 # There are several implementations named `netcat', and they have different options.
 #
@@ -54,16 +61,30 @@ readonly httpecho="echo -n"
 readonly defport=5432
 readonly deffile='-'
 
-# write usage to $1
+# error <message>
+error() {
+    echo "$progname:" ${@+"$@"} 1>&2
+    exit 1
+}
+
+# usage <output> <exit-code>
 usage() {
     cat <<- EOT >"$1"
 		$appname - Tiny File Transmit SeRVice/SeRVer (fake httpd)
-		usage: $progname [-h] [-p port] [-f file]
+		usage: $progname [-hv] [-p port] [-f file]
 		option:
 		    -f  Translation file (or stdin)
-		    -h  Show this text and exit
+		    -h  Show this help message and exit
 		    -p  Listen port (usually not needed). Default is $defport
+		    -v  Show program's version number and exit
 	EOT
+    exit $2
+}
+
+# version (no parameter)
+version() {
+    echo "$progname $version" 1>&2
+    exit 0
 }
 
 # parse options
@@ -71,37 +92,31 @@ port=$defport
 file=$deffile
 
 opt=
-while getopts 'f:hp:' opt; do
+while getopts 'f:hp:v' opt; do
     case $opt in
     f)      file=$OPTARG
-            if [ "$file" != '-' -a ! -f "$file" ]; then
-                echo "$progname: ${file}: Invalid argument" >/dev/stderr
-                exit 1
-            fi
+            [ "$file" = '-' -o -f "$file" ] || error "$file: Invalid argument"
             ;;
-    h)      usage /dev/stdout
-            exit 0
+    h)      usage /dev/stdout 0
             ;;
     p)      port=$OPTARG
             ;;
-    \?)     usage /dev/stderr
-            exit 1
+    v)      version
+            ;;
+    \?)     usage /dev/stderr 1
             ;;
     esac
 done
-shift `expr $OPTIND - 1`
+shift $(($OPTIND - 1))
 
-if [ $# -ne 0 ]; then
-    usage /dev/stderr
-    exit 1
-fi
+[ $# -eq 0 ] || usage /dev/stderr 1
 
 # exec one-time dummy HTTP service
 {
     $httpecho "HTTP/1.0 200 OK\r\n"
-    $httpecho "Date: `LANG=C date -u '+%a, %d %b %Y %T GMT'`\r\n"
+    $httpecho "Date: $(date -u '+%a, %d %b %Y %T GMT')\r\n"
     $httpecho "Server: $appname\r\n"
-    [ "$file" != '-' ] && $httpecho "Content-Length: `wc -c <"$file" | sed 's/[ \t]*//g'`\r\n"
+    [ "$file" != '-' ] && $httpecho "Content-Length: $(wc -c <"$file" | sed 's/[ \t]*//g')\r\n"
     $httpecho "Content-Type: application/octet-stream\r\n"
     $httpecho "Connection: close\r\n"
     $httpecho "\r\n"
