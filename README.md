@@ -16,7 +16,7 @@ zlib License.
 Target environments
 -------------------
 
-Cygwin, Linux, Mac OS X.
+Cygwin, Linux, macOS.
 
 tftsrv and tftsrv2 are shell script (sh), and so probably work fine on other Unix-like environment.
 
