@@ -30,11 +30,11 @@ IFS=$(printf ' \t\n_'); IFS=${IFS%_}
 PATH=/bin:/usr/bin:/usr/local/bin
 export IFS LC_ALL=C LANG=C PATH
 
-readonly progname=${0##*/}
-readonly version=1.1.0.20190405
+readonly progname="${0##*/}"
+readonly version=1.1.1.20220710
 
 # this server application name.
-readonly appname="tftsrv/1.1.0"
+readonly appname="tftsrv/1.1.1"
 
 # There are several implementations named `netcat', and they have different options.
 #
@@ -78,7 +78,7 @@ usage() {
 		    -p  Listen port (usually not needed). Default is $defport
 		    -v  Show program's version number and exit
 	EOT
-    exit $2
+    exit "$2"
 }
 
 # version (no parameter)
@@ -95,7 +95,7 @@ opt=
 while getopts 'f:hp:v' opt; do
     case $opt in
     f)      file=$OPTARG
-            [ "$file" = '-' -o -f "$file" ] || error "$file: Invalid argument"
+            [ "$file" = '-' ] || [ -f "$file" ] || error "$file: Invalid argument"
             ;;
     h)      usage /dev/stdout 0
             ;;
@@ -107,7 +107,7 @@ while getopts 'f:hp:v' opt; do
             ;;
     esac
 done
-shift $(($OPTIND - 1))
+shift $((OPTIND - 1))
 
 [ $# -eq 0 ] || usage /dev/stderr 1
 
@@ -121,4 +121,4 @@ shift $(($OPTIND - 1))
     $httpecho "Connection: close\r\n"
     $httpecho "\r\n"
     cat "$file"
-} | $nccmd $port
+} | $nccmd "$port"
